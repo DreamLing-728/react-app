@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Table, Button } from 'antd'
+
 import '../../assets/css/index.css';
-import {connect} from 'react-redux'
+import 'antd/dist/antd.css';
 import NavTitle from "../../components/index/NavTitle";
 
 class IndexList extends React.Component{
@@ -9,7 +12,11 @@ class IndexList extends React.Component{
 
         this.state = {
             numberDetail: [],
-            searchValue: ''
+            searchValue: '',
+            // antd-标题
+            antdTitle: [],
+            // antd-内容
+            antdData: []
         }
     }
 
@@ -27,20 +34,81 @@ class IndexList extends React.Component{
         // }
 
 
-        // 方法3： redux 拿到数据
+        // 方法2： redux 拿到数据
         // 拿到的是对象，转成数组
         let propsArr = Object.values(this.props);
-        this.setState({
-            numberDetail: propsArr
+
+        // antd-title: thead
+        let antdTitleTemp = [
+            {
+                title: '手机号',
+                dataIndex: 'tel',
+                key: 'tel',
+            },
+            {
+                title: '姓名',
+                dataIndex: 'name',
+                key: 'name',
+            },
+            {
+                title: '省份',
+                dataIndex: 'province',
+                key: 'province',
+            },
+            {
+                title: '城市',
+                dataIndex: 'city',
+                key: 'city',
+            },
+            {
+                title: '区号',
+                dataIndex: 'areacode',
+                key: 'areacode',
+            },
+            {
+                title: '操作',
+                key: 'action',
+                render: (record) => (
+                    <Button type = "primary" onClick={this.delete.bind(this, record.tel)}>删除</Button>
+                )
+            },
+        ];
+
+        // antd-data: tbody
+        let antdDataTamp = [];
+        propsArr.map((item) => {
+            let obj = {};
+            obj['key'] = item.tel;
+            obj['tel'] = item.tel;
+            obj['name'] = item.name;
+            obj['province'] = item.province;
+            obj['city'] = item.city;
+            obj['areacode'] = item.areacode;
+            antdDataTamp.push(obj);
         })
+
+        
+
+        // 渲染数据
+        this.setState({
+            // 标题
+            antdTitle: antdTitleTemp,
+
+            // 内容
+            antdData: antdDataTamp
+
+        })
+
+
     }
 
     delete(tel){
-        let res = this.state.numberDetail.filter((item) => (
+        console.log(tel);
+        let res = this.state.antdData.filter((item) => (
             item.tel !== tel
         ));
         this.setState({
-            numberDetail: res
+            antdData: res
         })
     }
 
@@ -77,10 +145,12 @@ class IndexList extends React.Component{
     render(){
         return(
             <div className="number-list">
+                {/* 标题区域 */}
                 <div className="title">
                     <NavTitle title="号码详情"/>
                 </div>
-
+                
+                {/* 搜索区域 */}
                 <div className="search">
                     <div className="searchInput">
                         <input type="text" onChange={(e) => (this.setState({searchValue: e.target.value}))}/>
@@ -90,36 +160,19 @@ class IndexList extends React.Component{
                     </div>
                 </div>
 
+                {/* 数据区域 */}
                 <div className="detailTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>号码</th>
-                                <th>姓名</th>
-                                <th>省份</th>
-                                <th>城市</th>
-                                <th>区号</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {this.state.numberDetail.map(item => (
-                                item.show?
-                                    <tr key={item.tel}>
-                                        <td key={item.tel + item.tel} >{item.tel}</td>
-                                        <td key={item.tel + item.name}>{item.name}</td>
-                                        <td key={item.tel + item.province + item.areacode}>{item.province}</td>
-                                        <td key={item.tel + item.city}>{item.city}</td>
-                                        <td key={item.tel + item.areacode}>{item.areacode}</td>
-                                        <td key={item.tel}><button onClick={this.delete.bind(this, item.tel)}>删除</button></td>
-                                    </tr>:
-                                    null
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table 
+                        columns = {this.state.antdTitle} 
+                        dataSource = {this.state.antdData}
+                        pagination = {{
+                            pageSize: 5
+                        }}
+                    />
+                
                 </div>
             </div>
+
 
         )
     }
