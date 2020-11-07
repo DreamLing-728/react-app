@@ -1,0 +1,45 @@
+*{margin: 0; padding: 0}
+
+.index{width: 100%; height: 100%; }
+
+.top-banner {width: 100%; height: 10%; margin-top: 0;  background-color: #23262E; color: white; font-size: 20px; text-align: center; line-height: 50px}
+
+.nav-list {float: left; width: 12%; height: 90%; background: #4E5465; color: white}
+
+.nav-list li {list-style: none; width: 100%; height: 60px; text-align: center; line-height: 60px; font-size: 18px}
+
+.nav-title {width: 100%; height: 10%; font-size: 30px}
+
+
+/*首页*/
+.index-home {float: right; width: 88%; height: 90%;  text-align: center; }
+
+.index-home .index-img{width: 300px; height: 300px;margin: 80px auto}
+
+.index-home .index-img img{ width: 100%; height: 100%;  }
+
+/*号码列表页*/
+.number-list {float: right;  display: flex; flex-direction: column; justify-content: center; align-items: center; width: 88%; height: 90%;}
+
+.number-list .title{width: 100%; height: 15%; text-align: center; }
+
+.number-list .search{width: 100%; height: 5%}
+
+.number-list .detailTable{width: 100%; height: 80%}
+
+.number-list {margin: 0  auto}
+
+.search {float: right; display: flex; justify-content: center; margin: 10px 20px}
+
+.searchButton {margin-left: 5px}
+
+table { border-collapse: collapse; margin: 0 auto; text-align: center; clear: both}
+
+table td, table th { border: 1px solid #cad9ea; color: #666; height: 30px;}
+
+table thead th { background-color: #CCE8EB; width: 100px;}
+
+table tr:nth-child(odd) {background: #fff;}
+
+table tr:nth-child(even) { background: #F5FAFA;}
+

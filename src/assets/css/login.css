@@ -1,0 +1,12 @@
+.login-container { margin: 0 auto; margin-top: 100px; display: flex; flex-direction: column; justify-content: space-around;
+    align-items: center; width:400px; height: 200px; padding: 10px; border: 1px solid #cad9ea; border-radius: 5px; font-size: 18px}
+
+.login-container label{margin: 10px}
+
+.login-container .inputValue input{height: 30px; border: 1px solid darkgrey; border-radius: 3px}
+
+.login-container .actionButton .loginButton{display: inline-block; margin: auto 10px}
+
+.login-container .actionButton .loginButton .login { background-color: #33ABA0; color: white}
+
+.login-container .actionButton input {width: 60px; height: 30px; border: none}
