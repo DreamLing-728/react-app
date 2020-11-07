@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {connect} from 'react-redux';
 
 import '../../assets/css/login.css';
 import '../../components/index/TopBanner'
 import TopBanner from "../../components/index/TopBanner";
+/* eslint-enable no-unused-vars */
 
 // 整体组件
 class Login extends React.Component{

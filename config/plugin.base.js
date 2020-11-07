@@ -3,7 +3,7 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const STYLELINT_ENABLE=false;
-const ESLINT_SWITCH=false;
+const ESLINT_SWITCH=true;
 
 module.exports={
   ESLINT_SWITCH,

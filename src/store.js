@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import {createStore} from 'redux';
+/* eslint-enable no-unused-vars */
 
 // 假装获取到了数据
 let initData = [
@@ -101,7 +103,7 @@ let initData = [
 ]
 
 // 创建reducer
-function reducer(state = initData, action) {
+function reducer(state = initData) {
     return state;
 }
 

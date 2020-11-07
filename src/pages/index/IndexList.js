@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Button } from 'antd'
@@ -5,6 +6,7 @@ import { Table, Button } from 'antd'
 import '../../assets/css/index.css';
 import 'antd/dist/antd.css';
 import NavTitle from "../../components/index/NavTitle";
+/* eslint-enable no-unused-vars */
 
 class IndexList extends React.Component{
     constructor(props){
@@ -103,7 +105,7 @@ class IndexList extends React.Component{
     }
 
     delete(tel){
-        console.log(tel);
+        // console.log(tel);
         let res = this.state.antdData.filter((item) => (
             item.tel !== tel
         ));

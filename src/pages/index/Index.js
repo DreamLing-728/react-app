@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import  {Route, Redirect}  from  'react-router-dom';
 import {connect} from 'react-redux'
@@ -6,6 +7,7 @@ import '../../assets/css/index.css';
 import IndexHome from "./IndexHome";
 import IndexList from "./IndexList";
 import TopBanner from "../../components/index/TopBanner";
+/* eslint-enable no-unused-vars */
 
 class Index extends React.Component {
     constructor(props){
@@ -15,6 +17,7 @@ class Index extends React.Component {
             nav : []
         }
     }
+
 
     componentDidMount(){
         // 假装获取到了数据
@@ -56,10 +59,10 @@ class Index extends React.Component {
 
                 {/*右边详情栏*/}
                 <Redirect from="/index" to="/index/home"/>
-                <Route path={`/index/home`} render={props => (
+                <Route path={`/index/home`} render={() => (
                     <IndexHome/>
                 )} ></Route>
-                <Route path="/index/list" render={props => (
+                <Route path="/index/list" render={() => (
                     <IndexList/>
                 )} ></Route>
             </div>
