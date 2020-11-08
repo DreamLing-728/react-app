@@ -12,6 +12,7 @@ import NavTitle from "../../components/index/NavTitle";
 import Column from 'antd/lib/table/Column';
 /* eslint-enable no-unused-vars */
 
+const { Search } = Input;
 
 class IndexList extends React.Component{
     constructor(props){
@@ -41,6 +42,7 @@ class IndexList extends React.Component{
                 dataIndex: 'tel',
                 key: 'tel',
                 align: 'center',
+                canSearch: true,
                 ...this.getColumnSearchProps('tel'),
             },
             {
@@ -48,6 +50,7 @@ class IndexList extends React.Component{
                 dataIndex: 'name',
                 key: 'name',
                 align: 'center',
+                canSearch: true,
                 ...this.getColumnSearchProps('name'),
             },
             {
@@ -55,6 +58,7 @@ class IndexList extends React.Component{
                 dataIndex: 'province',
                 key: 'province',
                 align: 'center',
+                canSearch: false,
                 ...this.getColumnSearchProps('province')
             },
             {
@@ -62,6 +66,7 @@ class IndexList extends React.Component{
                 dataIndex: 'city',
                 key: 'city',
                 align: 'center',
+                canSearch: true,
                 ...this.getColumnSearchProps('city')
             },
             {
@@ -69,6 +74,7 @@ class IndexList extends React.Component{
                 dataIndex: 'areacode',
                 key: 'areacode',
                 align: 'center',
+                canSearch: false,
                 ...this.getColumnSearchProps('areacode'),
             },
             {
@@ -223,9 +229,28 @@ class IndexList extends React.Component{
         clearFilters();
         this.setState({ searchText: '' });
     }
+
+    // 搜索输入框
+    onBlur = () => {
+        const { value, onBlur, onChange } = this.props;
+        let valueTemp = value;
+        if (value.charAt(value.length - 1) === '.' || value === '-') {
+          valueTemp = value.slice(0, -1);
+        }
+        onChange(valueTemp.replace(/0*(\d+)/, '$1'));
+        if (onBlur) {
+          onBlur();
+        }
+    };
+
+    onChange = e => {
+        const { value } = e.target;
+        const reg = /^-?\d*(\.\d*)?$/;
+        if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
+          this.props.onChange(value);
+        }
+    };
     
-
-
 
     render(){
         return(
@@ -237,12 +262,29 @@ class IndexList extends React.Component{
                 
                 {/* 搜索区域 */}
                 <div className="search">
-                    <div className="searchInput">
-                        <input type="text" onChange={(e) => (this.setState({searchValue: e.target.value}))}/>
+                    <div className="search-inputs">
+                        {this.state.antdTitle.filter(item => (item.canSearch === true)).map(item => (
+                            <div key={item.key} className="search-input">
+                                <Space>
+                                    <lable>{item.title}</lable>
+                                    <Input
+                                        {...this.props}
+                                        onChange={this.onChange}
+                                        onBlur={this.onBlur}
+                                        placeholder={`input a ${item.key}`}
+                                        maxLength={25}
+                                    />
+                                </Space>
+                            </div>
+                        ))}
                     </div>
-                    <div className="searchButton">
-                        <input type="button" value="搜索" onClick={this.search.bind(this, this.state.searchValue)}/>
+                    
+                    <div className="search-button">
+                        <Button type="primary" icon={<SearchOutlined />}>搜索</Button>
+                        <Button type="text" size="middle">重置</Button>
                     </div>
+                    
+                    
                 </div>
 
                 {/* 数据区域 */}
@@ -253,8 +295,12 @@ class IndexList extends React.Component{
                         columns = {this.state.antdTitle} 
                         dataSource = {this.state.antdData}
                         pagination = {{
+                            total:this.state.antdData.length,
+                            showTotal: total => `共${total}条记录`,
                             position: ['bottomCenter'],
-                            pageSize: 7
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            defaultPageSize: 7
                         }}
                     />
                 </div>

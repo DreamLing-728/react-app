@@ -21,19 +21,23 @@
 /*号码列表页*/
 .number-list {float: right;  display: flex; flex-direction: column; justify-content: center; align-items: center; width: 88%; height: 90%;}
 
-.number-list .title{width: 100%; height: 15%; text-align: center; }
+.number-list .title{width: 100%; height: 10%; text-align: center; }
 
-.number-list .search{width: 100%; height: 5%}
+.number-list .search{width: 90%; height: 15%}
 
-.number-list .detailTable{width: 90%; height: 80%}
+.number-list .detailTable{width: 90%; height: 75%}
 
-.number-list .detailTable #roleTable{height: 390px;}
+.number-list .detailTable #roleTable{height: 370px;}
 
-.number-list .detailTable .relatedPartyMaint .ant-table-tbody > tr >td{padding: 0 0; height:45px; }
+.number-list .detailTable .relatedPartyMaint .ant-table-tbody > tr >td{padding: 0 0; height:40px; }
 
 .number-list {margin: 0  auto}
 
-.search {float: right; display: flex; justify-content: center; margin: 10px 20px}
+.search {float: right; display: flex; justify-content: center; flex-direction: column; align-items: center; margin: 10px 20px}
+
+.search-inputs {display: flex; justify-content: center; align-items: center; margin: 10px;}
+
+.search-inputs .search-input{margin: auto 10px;}
 
 .searchButton {margin-left: 5px}
 
