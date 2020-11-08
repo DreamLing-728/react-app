@@ -16,7 +16,9 @@
     "react-dom": "^16.8.4"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "antd": "^4.8.0",
@@ -38,7 +40,9 @@
     "ramda": "^0.26.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-highlight-words": "^0.16.0",
     "react-redux": "^6.0.1",
+    "react-resizable": "^1.11.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.1",
     "style-loader": "^0.23.1",

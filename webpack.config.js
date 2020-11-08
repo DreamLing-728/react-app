@@ -25,6 +25,9 @@ module.exports=function (env={}, argv){
                             options: {
                                 presets: [
                                     '@babel/preset-react'
+                                ],
+                                plugins: [
+                                    ["@babel/plugin-proposal-class-properties", {"loose": true}]
                                 ]
                             }
                         },

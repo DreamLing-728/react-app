@@ -27,6 +27,10 @@
 
 .number-list .detailTable{width: 90%; height: 80%}
 
+.number-list .detailTable #roleTable{height: 390px;}
+
+.number-list .detailTable .relatedPartyMaint .ant-table-tbody > tr >td{padding: 0 0; height:45px; }
+
 .number-list {margin: 0  auto}
 
 .search {float: right; display: flex; justify-content: center; margin: 10px 20px}
