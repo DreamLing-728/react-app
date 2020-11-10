@@ -2,7 +2,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import '../../assets/css/login.css';
+import '../../assets/css/login.less';
 import '../../components/index/TopBanner'
 import TopBanner from "../../components/index/TopBanner";
 /* eslint-enable no-unused-vars */
@@ -34,8 +34,6 @@ class Login extends React.Component{
         }else{
             alert('密码错误，重新输入');
         }
-
-
 
     }
 

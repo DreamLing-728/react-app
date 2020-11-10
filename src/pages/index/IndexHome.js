@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import '../../assets/css/index.css';
+import '../../assets/css/index.less';
 
 import imgUrl from '../../assets/img/logo_big.png';
 import NavTitle from '../../components/index/NavTitle';

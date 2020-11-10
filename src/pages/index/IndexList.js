@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, Input, Space } from 'antd';
+import { Table, Button, Input, Space, Dropdown } from 'antd';
 import { Resizable } from 'react-resizable';
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, DownOutlined } from '@ant-design/icons';
 
-import '../../assets/css/index.css';
+
+import '../../assets/css/index.less';
 import 'antd/dist/antd.css';
 import NavTitle from "../../components/index/NavTitle";
 import Column from 'antd/lib/table/Column';
@@ -24,12 +25,12 @@ class IndexList extends React.Component{
             // antd-内容
             antdData: [],
             searchText: '',
-            searchedColumn: ''
+            searchedColumn: '',
+            
         }
     }
 
     
-
     componentDidMount(){
         // redux 拿到数据
         // 拿到的是对象，转成数组
@@ -43,7 +44,10 @@ class IndexList extends React.Component{
                 key: 'tel',
                 align: 'center',
                 canSearch: true,
+                canDropdown: false,
                 ...this.getColumnSearchProps('tel'),
+                sorter: (a, b) => a.tel - b.tel,
+                sortDirections: ['descend', 'ascend'],
             },
             {
                 title: '姓名',
@@ -51,6 +55,7 @@ class IndexList extends React.Component{
                 key: 'name',
                 align: 'center',
                 canSearch: true,
+                canDropdown: false,
                 ...this.getColumnSearchProps('name'),
             },
             {
@@ -58,7 +63,8 @@ class IndexList extends React.Component{
                 dataIndex: 'province',
                 key: 'province',
                 align: 'center',
-                canSearch: false,
+                canSearch: true,
+                canDropdown: true,
                 ...this.getColumnSearchProps('province')
             },
             {
@@ -67,6 +73,7 @@ class IndexList extends React.Component{
                 key: 'city',
                 align: 'center',
                 canSearch: true,
+                canDropdown: true,
                 ...this.getColumnSearchProps('city')
             },
             {
@@ -75,7 +82,10 @@ class IndexList extends React.Component{
                 key: 'areacode',
                 align: 'center',
                 canSearch: false,
+                canDropdown: false,
                 ...this.getColumnSearchProps('areacode'),
+                sorter: (a, b) => a.areacode - b.areacode,
+                sortDirections: ['descend'],
             },
             {
                 title: '操作',
@@ -101,6 +111,9 @@ class IndexList extends React.Component{
             antdDataTamp.push(obj);
         })
 
+        // 省份下拉菜单
+        let cityMenuData = ['']
+
         // 渲染数据
         this.setState({
             // 标题
@@ -109,6 +122,9 @@ class IndexList extends React.Component{
             // 内容
             antdData: antdDataTamp,
         })
+
+        
+
 
         // 搜索功能
         
@@ -266,26 +282,29 @@ class IndexList extends React.Component{
                         {this.state.antdTitle.filter(item => (item.canSearch === true)).map(item => (
                             <div key={item.key} className="search-input">
                                 <Space>
-                                    <lable>{item.title}</lable>
-                                    <Input
-                                        {...this.props}
-                                        onChange={this.onChange}
-                                        onBlur={this.onBlur}
-                                        placeholder={`input a ${item.key}`}
-                                        maxLength={25}
-                                    />
+                                    <div>{item.title}</div>
+                                        <Input
+                                            onChange={this.onChange}
+                                            onBlur={this.onBlur}
+                                            placeholder={`input a ${item.key}`}
+                                            maxLength={25}
+                                        />
                                 </Space>
                             </div>
+                            
                         ))}
                     </div>
                     
                     <div className="search-button">
-                        <Button type="primary" icon={<SearchOutlined />}>搜索</Button>
-                        <Button type="text" size="middle">重置</Button>
+                        <div>
+                            <Button type="primary" id="button-search" icon={<SearchOutlined />}>搜索</Button>
+                        </div>
+                        <div>
+                            <Button >重置</Button>
+                        </div>
                     </div>
-                    
-                    
                 </div>
+
 
                 {/* 数据区域 */}
                 <div className="detailTable">

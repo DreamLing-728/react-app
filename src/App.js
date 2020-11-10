@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
-import './assets/css/App.css';
+import './assets/css/App.less';
 import MyRoute from './router/router';
 import {connect} from 'react-redux';
 /* eslint-enable no-unused-vars */

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/index.css';
+import '../../assets/css/index.less';
 
 class NavTitle extends React.Component{
     constructor(props){
@@ -13,7 +13,7 @@ class NavTitle extends React.Component{
         return(
             <div className="nav-title">
                 {/*接收父组件参数*/}
-                <h4>{this.props.title}</h4>
+                <div>{this.props.title}</div>
             </div>
         )
     }
