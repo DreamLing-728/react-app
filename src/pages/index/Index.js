@@ -14,7 +14,7 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-import '../../assets/css/index.less';
+import '@css/index.less';
 import IndexHome from "./IndexHome";
 import IndexList from "./IndexList";
 import TopBanner from "../../components/index/TopBanner";
@@ -121,13 +121,9 @@ class Index extends React.Component {
                             )} ></Route>
                             </div>
                         </Content>
-                        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                        <Footer style={{ textAlign: 'center' }}>Design ©2020 Created by cml</Footer>
                     </Layout>
                 </Layout>
-
-                
-                
-
             </div>
         )
     }

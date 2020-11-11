@@ -1,4 +1,5 @@
-const {ESLINT_SWITCH} = require('./config/plugin.base');
+const {ESLINT_SWITCH, path} = require('./config/plugin.base');
+
 
 module.exports=function (env={}, argv){
   let config = null;
@@ -95,6 +96,16 @@ module.exports=function (env={}, argv){
                     ]
                 }
             ]
+        },
+        resolve: {
+            // 设置别名
+            // extensions: ['.ts', '.tsx', '.js', 'config.js', '.json'],
+            alias: {
+                '@components': path.resolve(__dirname, './src/components'),
+                '@pages': path.resolve(__dirname, './src/pages'),
+                '@assets': path.resolve(__dirname, './src/assets'),
+                '@css': path.resolve(__dirname, './src/assets/css'),
+            }
         },
         ...config
     };

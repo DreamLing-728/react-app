@@ -3,7 +3,7 @@ import React from 'react';
 import '../../assets/css/index.less';
 
 import imgUrl from '../../assets/img/logo_big.png';
-import NavTitle from '../../components/index/NavTitle';
+import NavTitle from '@components/index/NavTitle';
 /* eslint-enable no-unused-vars */
 
 class IndexHome extends React.Component{

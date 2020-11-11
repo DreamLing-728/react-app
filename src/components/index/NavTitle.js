@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/index.less';
+import '@css/index.less';
 
 class NavTitle extends React.Component{
     constructor(props){

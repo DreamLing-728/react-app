@@ -5,12 +5,12 @@ import { Table, Button, Input, Space, Dropdown } from 'antd';
 import { Resizable } from 'react-resizable';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DownOutlined } from '@ant-design/icons';
-
-
-import '../../assets/css/index.less';
-import 'antd/dist/antd.css';
-import NavTitle from "../../components/index/NavTitle";
 import Column from 'antd/lib/table/Column';
+import 'antd/dist/antd.css';
+
+import '@css/index.less';
+import NavTitle from "@components/index/NavTitle";
+
 /* eslint-enable no-unused-vars */
 
 const { Search } = Input;
@@ -18,7 +18,6 @@ const { Search } = Input;
 class IndexList extends React.Component{
     constructor(props){
         super(props);
-
         this.state = {
             // antd-标题
             antdTitle: [],
@@ -29,7 +28,6 @@ class IndexList extends React.Component{
             
         }
     }
-
     
     componentDidMount(){
         // redux 拿到数据
