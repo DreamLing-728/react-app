@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {createStore} from 'redux';
+import { createStore } from 'redux';
 /* eslint-enable no-unused-vars */
 
 // 假装获取到了数据

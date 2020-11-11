@@ -19,5 +19,12 @@ module.exports = {
         "react"
     ],
     "rules": {
-    }
+        'semi': true,
+    },
+    // 'semi': [2, 'never'],
+    
+    // 'semi-spacing': [2, {
+    //   'before': false,
+    //   'after': true
+    // }],
 };

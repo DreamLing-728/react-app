@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import  {Route, Redirect}  from  'react-router-dom';
-import {connect} from 'react-redux';
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
     DesktopOutlined,
@@ -9,7 +9,7 @@ import {
     FileOutlined,
     TeamOutlined,
     UserOutlined,
-  } from '@ant-design/icons';
+} from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -21,20 +21,20 @@ import TopBanner from "../../components/index/TopBanner";
 /* eslint-enable no-unused-vars */
 
 class Index extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            nav : [],
+            nav: [],
             collapsed: false
         }
     }
 
 
-    componentDidMount(){
+    componentDidMount() {
         // 导航菜单复用少，其实好像没必要存到变量里？
         this.setState({
-            nav:[
+            nav: [
                 {
                     id: 0,
                     value: "首页",
@@ -64,7 +64,7 @@ class Index extends React.Component {
         })
     }
 
-    goDetail(url){
+    goDetail(url) {
         this.props.history.replace(url);
     }
 
@@ -73,20 +73,20 @@ class Index extends React.Component {
         this.setState({ collapsed });
     };
 
-    render(){
+    render() {
         // console.log('in index',this.props)
-        return(
+        return (
             <div className="index">
-                <Layout style={{ minHeight: '100vh'}}>
+                <Layout style={{ minHeight: '100vh' }}>
                     {/* 左侧 */}
                     <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                         <div className="logo" >号码管理系统</div>
                         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={ this.goDetail.bind(this, "/index/home")}>
-                            首页
+                            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={this.goDetail.bind(this, "/index/home")}>
+                                首页
                             </Menu.Item>
-                            <Menu.Item key="2" icon={<DesktopOutlined />} onClick={ this.goDetail.bind(this, "/index/list")}>
-                            列表
+                            <Menu.Item key="2" icon={<DesktopOutlined />} onClick={this.goDetail.bind(this, "/index/list")}>
+                                列表
                             </Menu.Item>
                             <SubMenu key="sub1" icon={<UserOutlined />} title="菜单">
                                 <Menu.Item key="3">子菜单1</Menu.Item>
@@ -108,17 +108,17 @@ class Index extends React.Component {
                         </Menu>
                     </Sider>
                     {/* 右侧 */}
-                    <Layout className = "site-layout">
+                    <Layout className="site-layout">
                         <Header className="site-layout-background" style={{ padding: 0 }} />
                         <Content style={{ margin: '0 0' }}>
                             <div className="site-layout-background" style={{ padding: 0, minHeight: 360 }}>
-                            <Redirect from="/index" to="/index/home"/>
-                            <Route path={`/index/home`} render={() => (
-                                <IndexHome/>
-                            )} ></Route>
-                            <Route path="/index/list" render={() => (
-                                <IndexList/>
-                            )} ></Route>
+                                <Redirect from="/index" to="/index/home" />
+                                <Route path={`/index/home`} render={() => (
+                                    <IndexHome />
+                                )} ></Route>
+                                <Route path="/index/list" render={() => (
+                                    <IndexList />
+                                )} ></Route>
                             </div>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Design ©2020 Created by cml</Footer>
@@ -129,4 +129,4 @@ class Index extends React.Component {
     }
 }
 
-export default connect((state, props) => (Object.assign({}, state, props)),{}) (Index);
+export default connect((state, props) => (Object.assign({}, state, props)), {})(Index);

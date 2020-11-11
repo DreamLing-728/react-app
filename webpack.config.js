@@ -1,18 +1,18 @@
-const {ESLINT_SWITCH, path} = require('./config/plugin.base');
+const { ESLINT_SWITCH, path } = require('./config/plugin.base');
 
 
-module.exports=function (env={}, argv){
-  let config = null;
+module.exports = function (env = {}, argv) {
+    let config = null;
 
-  if(env.dev){          //开发模式
-    config=require('./config/webpack.dev');
-  }else if(env.prod){   //生产模式
-    config=require('./config/webpack.prod');
-  }else{                //测试
-    config=require('./config/webpack.test');
-  }
-  
-  return {
+    if (env.dev) {          //开发模式
+        config = require('./config/webpack.dev');
+    } else if (env.prod) {   //生产模式
+        config = require('./config/webpack.prod');
+    } else {                //测试
+        config = require('./config/webpack.test');
+    }
+
+    return {
         entry: './src/index', // 公用
         module: { // 公用
             rules: [
@@ -28,12 +28,12 @@ module.exports=function (env={}, argv){
                                     '@babel/preset-react'
                                 ],
                                 plugins: [
-                                    ["@babel/plugin-proposal-class-properties", {"loose": true}]
+                                    ["@babel/plugin-proposal-class-properties", { "loose": true }]
                                 ]
                             }
                         },
                         // 5.1增加ESlint loader
-                        ...ESLINT_SWITCH?[ // 5.1.2添加eslint开关
+                        ...ESLINT_SWITCH ? [ // 5.1.2添加eslint开关
                             {
                                 loader: 'eslint-loader',
                                 options: {
@@ -45,7 +45,7 @@ module.exports=function (env={}, argv){
                                     }
                                 }
                             }
-                        ]:[]
+                        ] : []
                     ]
                 },
                 // 处理css
@@ -71,7 +71,7 @@ module.exports=function (env={}, argv){
                         loader: 'url-loader',
                         options: {
                             outputPath: 'imgs/',
-                            limit: 10*1024
+                            limit: 10 * 1024
                         }
                     }
                 },
@@ -82,9 +82,9 @@ module.exports=function (env={}, argv){
                         loader: 'url-loader',
                         options: {
                             outputPath: 'fonts/',
-                            limit: 10*1024
+                            limit: 10 * 1024
                         }
-                   }
+                    }
                 },
                 // 处理less
                 {

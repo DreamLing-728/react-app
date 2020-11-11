@@ -3,13 +3,13 @@ import React from 'react';
 
 import '@css/App.less';
 import MyRoute from './router/router';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 /* eslint-enable no-unused-vars */
 
 function App() {
     return (
         <div className="App">
-            <MyRoute/>
+            <MyRoute />
         </div>
     );
 }
@@ -18,4 +18,4 @@ function App() {
 export default connect((state, props) => {
     // console.log('in connect',state, props);
     return Object.assign({}, state, props);
-},{}) (App);
+}, {})(App);

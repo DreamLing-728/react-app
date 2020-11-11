@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { connect } from 'react-redux';
-import { Table, Button, Input, Space, Dropdown } from 'antd';
+import { connect } from 'react-redux'
+import { Table, Button, Input, Space, Dropdown } from 'antd'
 import { Resizable } from 'react-resizable';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, DownOutlined } from '@ant-design/icons';
-import Column from 'antd/lib/table/Column';
+import Column from 'antd/lib/table/Column'
 import 'antd/dist/antd.css';
 
 import '@css/index.less';
@@ -13,10 +13,10 @@ import NavTitle from "@components/index/NavTitle";
 
 /* eslint-enable no-unused-vars */
 
-const { Search } = Input;
+const { Search } = Input
 
-class IndexList extends React.Component{
-    constructor(props){
+class IndexList extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
             // antd-标题
@@ -25,11 +25,11 @@ class IndexList extends React.Component{
             antdData: [],
             searchText: '',
             searchedColumn: '',
-            
+
         }
     }
-    
-    componentDidMount(){
+
+    componentDidMount() {
         // redux 拿到数据
         // 拿到的是对象，转成数组
         let propsArr = Object.values(this.props);
@@ -90,7 +90,7 @@ class IndexList extends React.Component{
                 key: 'action',
                 align: 'center',
                 render: (record) => (
-                    <Button type = "primary" onClick={this.delete.bind(this, record.tel)}>删除</Button>
+                    <Button type="primary" onClick={this.delete.bind(this, record.tel)}>删除</Button>
                     // <Button type = "primary" onClick={this.delete(record.tel)}>删除</Button>
                 )
             },
@@ -121,14 +121,14 @@ class IndexList extends React.Component{
             antdData: antdDataTamp,
         })
 
-        
+
 
 
         // 搜索功能
-        
+
     }
 
-    delete(tel){
+    delete(tel) {
         let res = this.state.antdData.filter((item) => (
             item.tel !== tel
         ));
@@ -149,14 +149,14 @@ class IndexList extends React.Component{
     // }
 
     // 传统搜索
-    search(val){
+    search(val) {
         // 初始化：所有都显示
         this.state.numberDetail.map((item) => {
             item.show = true
         });
 
         // 如果搜索字段为空，显示全部
-        if(val.match(/^\s*$/)){
+        if (val.match(/^\s*$/)) {
             this.setState({
                 numberDetail: this.state.numberDetail
             });
@@ -168,7 +168,7 @@ class IndexList extends React.Component{
             // item是一个Json，把Json的所有value取出来
             let temp = Object.values(item).join('');
             // 如果整个item里没有找到字符串val,则此item不显示
-            if(temp.indexOf(val) === -1){
+            if (temp.indexOf(val) === -1) {
                 item.show = false
             }
         })
@@ -182,60 +182,60 @@ class IndexList extends React.Component{
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
-              <Input
-                ref={node => {
-                  this.searchInput = node;
-                }}
-                placeholder={`Search ${dataIndex}`}
-                value={selectedKeys[0]}
-                onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-                style={{ width: 188, marginBottom: 8, display: 'block' }}
-              />
-              <Space>
-                <Button
-                  type="primary"
-                  onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-                  icon={<SearchOutlined />}
-                  size="small"
-                  style={{ width: 90 }}
-                >
-                  Search
+                <Input
+                    ref={node => {
+                        this.searchInput = node;
+                    }}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{ width: 188, marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
                 </Button>
-                <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-                  Reset
+                    <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+                        Reset
                 </Button>
-              </Space>
+                </Space>
             </div>
-          ),
+        ),
         filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
         onFilter: (value, record) =>
-        record[dataIndex]
-          ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-          : '',
+            record[dataIndex]
+                ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+                : '',
         onFilterDropdownVisibleChange: visible => {
             if (visible) {
-              setTimeout(() => this.searchInput.select(), 100);
+                setTimeout(() => this.searchInput.select(), 100);
             }
         },
         render: text =>
-        this.state.searchedColumn === dataIndex ? (
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[this.state.searchText]}
-            autoEscape
-            textToHighlight={text ? text.toString() : ''}
-          />
-        ) : (
-          text
-        )
+            this.state.searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[this.state.searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                    text
+                )
     })
 
     handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         this.setState({
-        searchText: selectedKeys[0],
-        searchedColumn: dataIndex,
+            searchText: selectedKeys[0],
+            searchedColumn: dataIndex,
         });
     }
 
@@ -249,11 +249,11 @@ class IndexList extends React.Component{
         const { value, onBlur, onChange } = this.props;
         let valueTemp = value;
         if (value.charAt(value.length - 1) === '.' || value === '-') {
-          valueTemp = value.slice(0, -1);
+            valueTemp = value.slice(0, -1);
         }
         onChange(valueTemp.replace(/0*(\d+)/, '$1'));
         if (onBlur) {
-          onBlur();
+            onBlur();
         }
     };
 
@@ -261,19 +261,19 @@ class IndexList extends React.Component{
         const { value } = e.target;
         const reg = /^-?\d*(\.\d*)?$/;
         if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
-          this.props.onChange(value);
+            this.props.onChange(value);
         }
     };
-    
 
-    render(){
-        return(
+
+    render() {
+        return (
             <div className="number-list">
                 {/* 标题区域 */}
                 <div className="title">
-                    <NavTitle title="号码详情"/>
+                    <NavTitle title="号码详情" />
                 </div>
-                
+
                 {/* 搜索区域 */}
                 <div className="search">
                     <div className="search-inputs">
@@ -281,18 +281,18 @@ class IndexList extends React.Component{
                             <div key={item.key} className="search-input">
                                 <Space>
                                     <div>{item.title}</div>
-                                        <Input
-                                            onChange={this.onChange}
-                                            onBlur={this.onBlur}
-                                            placeholder={`input a ${item.key}`}
-                                            maxLength={25}
-                                        />
+                                    <Input
+                                        onChange={this.onChange}
+                                        onBlur={this.onBlur}
+                                        placeholder={`input a ${item.key}`}
+                                        maxLength={25}
+                                    />
                                 </Space>
                             </div>
-                            
+
                         ))}
                     </div>
-                    
+
                     <div className="search-button">
                         <div>
                             <Button type="primary" id="button-search" icon={<SearchOutlined />}>搜索</Button>
@@ -306,13 +306,13 @@ class IndexList extends React.Component{
 
                 {/* 数据区域 */}
                 <div className="detailTable">
-                    <Table 
-                        id = "roleTable"
-                        className = "relatedPartyMaint"
-                        columns = {this.state.antdTitle} 
-                        dataSource = {this.state.antdData}
-                        pagination = {{
-                            total:this.state.antdData.length,
+                    <Table
+                        id="roleTable"
+                        className="relatedPartyMaint"
+                        columns={this.state.antdTitle}
+                        dataSource={this.state.antdData}
+                        pagination={{
+                            total: this.state.antdData.length,
                             showTotal: total => `共${total}条记录`,
                             position: ['bottomCenter'],
                             showSizeChanger: true,
@@ -328,4 +328,4 @@ class IndexList extends React.Component{
     }
 }
 
-export default connect((state, props) => (Object.assign({}, state, props)),{}) (IndexList);
+export default connect((state, props) => (Object.assign({}, state, props)), {})(IndexList);
