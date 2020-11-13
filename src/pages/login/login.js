@@ -20,8 +20,8 @@ class Login extends React.Component {
     toLogin(url) {
         // 匹配0个或者多个空格
         if (this.state.username.match(/^\s*$/)) {
-            alert('手机号不能为空');
-            return false;
+            alert("手机号不能为空")
+            return false
         }
         if (this.state.password.match(/^\s*$/)) {
             alert('密码不能为空');

@@ -10,7 +10,6 @@ import 'antd/dist/antd.css';
 
 import '@css/index.less';
 import NavTitle from "@components/index/NavTitle";
-
 /* eslint-enable no-unused-vars */
 
 const { Search } = Input
@@ -29,21 +28,21 @@ class IndexList extends React.Component {
         }
     }
 
-    componentDidMount() {
-        // redux 拿到数据
-        // 拿到的是对象，转成数组
-        let propsArr = Object.values(this.props);
-
+    // 初始化标题
+    componentWillMount() {
         // antd-title: 初始化thead
         let antdTitleInit = [
             {
                 title: '手机号',
                 dataIndex: 'tel',
                 key: 'tel',
+                width: 150,
                 align: 'center',
                 canSearch: true,
                 canDropdown: false,
-                ...this.getColumnSearchProps('tel'),
+                // 在标题处搜索
+                // ...this.getColumnSearchProps('tel'),
+                // 排序
                 sorter: (a, b) => a.tel - b.tel,
                 sortDirections: ['descend', 'ascend'],
             },
@@ -51,24 +50,27 @@ class IndexList extends React.Component {
                 title: '姓名',
                 dataIndex: 'name',
                 key: 'name',
+                width: 150,
                 align: 'center',
                 canSearch: true,
                 canDropdown: false,
-                ...this.getColumnSearchProps('name'),
+                // ...this.getColumnSearchProps('name'),
             },
             {
                 title: '省份',
                 dataIndex: 'province',
                 key: 'province',
+                width: 150,
                 align: 'center',
                 canSearch: true,
                 canDropdown: true,
-                ...this.getColumnSearchProps('province')
+                // ...this.getColumnSearchProps('province')
             },
             {
                 title: '城市',
                 dataIndex: 'city',
                 key: 'city',
+                width: 150,
                 align: 'center',
                 canSearch: true,
                 canDropdown: true,
@@ -78,6 +80,7 @@ class IndexList extends React.Component {
                 title: '区号',
                 dataIndex: 'areacode',
                 key: 'areacode',
+                width: 150,
                 align: 'center',
                 canSearch: false,
                 canDropdown: false,
@@ -88,13 +91,34 @@ class IndexList extends React.Component {
             {
                 title: '操作',
                 key: 'action',
+                width: 150,
                 align: 'center',
                 render: (record) => (
                     <Button type="primary" onClick={this.delete.bind(this, record.tel)}>删除</Button>
                     // <Button type = "primary" onClick={this.delete(record.tel)}>删除</Button>
                 )
             },
-        ];
+        ]
+        let antdTitleTemp = antdTitleInit.map((col, index) => {
+            return {
+                ...col,
+                onHeaderCell: antdTitleInit => ({
+                    width: antdTitleInit.width,
+                    // 添加可伸缩属性
+                    onResize: this.handleResize(index)
+                })
+            }
+        });
+
+        this.setState({
+            antdTitle: antdTitleTemp
+        })
+    }
+
+    componentDidMount() {
+        // redux 拿到数据：拿到的是对象，转成数组
+        let propsArr = Object.values(this.props);
+
 
         // antd-data: tbody
         let antdDataTamp = [];
@@ -109,25 +133,15 @@ class IndexList extends React.Component {
             antdDataTamp.push(obj);
         })
 
-        // 省份下拉菜单
-        let cityMenuData = ['']
 
         // 渲染数据
         this.setState({
-            // 标题
-            antdTitle: antdTitleInit,
-
             // 内容
             antdData: antdDataTamp,
         })
-
-
-
-
-        // 搜索功能
-
     }
 
+    // 1. 删除功能
     delete(tel) {
         let res = this.state.antdData.filter((item) => (
             item.tel !== tel
@@ -148,7 +162,55 @@ class IndexList extends React.Component {
     //     })
     // }
 
-    // 传统搜索
+    // 2. 列宽可调控
+    ResizableTitle = (props) => {
+        console.log('props', props);
+        const { onResize, width, ...restProps } = props;
+
+        return (
+            <Resizable
+                width={width}
+                height={0}
+                handle={
+                    <span
+                        className="react-resizable-handle"
+                        onClick={e => {
+                            e.stopPropagation();
+                        }}
+                    />
+                }
+                onResize={onResize}
+                draggableOpts={{ enableUserSelectHack: false }}
+            >
+                <th {...restProps} />
+            </Resizable>
+        );
+    }
+
+    handleResize = index => (e, { size }) => {
+        // console.log('e+size', e, size)
+        this.setState(({ antdTitle }) => {
+            // console.log('columns',antdTitle);
+            const nextColumns = [...antdTitle];
+            nextColumns[index] = {
+                ...nextColumns[index],
+                width: size.width,
+            };
+            return { antdTitle: nextColumns };
+        });
+    };
+
+    // 控制列宽调控的对象
+    components = {
+        // 头部
+        header: {
+            // 每一个单元格属性设置
+            cell: this.ResizableTitle,
+        },
+    };
+
+
+    // 3.搜索
     search(val) {
         // 初始化：所有都显示
         this.state.numberDetail.map((item) => {
@@ -179,7 +241,7 @@ class IndexList extends React.Component {
     }
 
     // antd 搜索
-    getColumnSearchProps = dataIndex => ({
+    getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
                 <Input
@@ -267,6 +329,8 @@ class IndexList extends React.Component {
 
 
     render() {
+
+
         return (
             <div className="number-list">
                 {/* 标题区域 */}
@@ -309,8 +373,15 @@ class IndexList extends React.Component {
                     <Table
                         id="roleTable"
                         className="relatedPartyMaint"
+                        // 标题
                         columns={this.state.antdTitle}
+                        // 数据
                         dataSource={this.state.antdData}
+                        // 边框
+                        bordered="true"
+                        // 覆盖默认的 table 元素
+                        components={this.components}
+                        // 分页
                         pagination={{
                             total: this.state.antdData.length,
                             showTotal: total => `共${total}条记录`,

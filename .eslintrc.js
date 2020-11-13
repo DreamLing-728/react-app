@@ -4,6 +4,7 @@ module.exports = {
         "es6": true
     },
     "extends": "eslint:recommended",
+    // "extends": "elemefe/react",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -19,7 +20,7 @@ module.exports = {
         "react"
     ],
     "rules": {
-        'semi': true,
+        // 'semi': true,
     },
     // 'semi': [2, 'never'],
     

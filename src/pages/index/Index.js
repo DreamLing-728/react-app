@@ -68,7 +68,7 @@ class Index extends React.Component {
         this.props.history.replace(url);
     }
 
-    onCollapse = collapsed => {
+    onCollapse = (collapsed) => {
         console.log(collapsed);
         this.setState({ collapsed });
     };
