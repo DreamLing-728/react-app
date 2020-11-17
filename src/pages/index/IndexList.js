@@ -10,6 +10,7 @@ import 'antd/dist/antd.css';
 
 import '@css/index.less';
 import NavTitle from "@components/index/NavTitle";
+import { reject, set } from 'ramda';
 /* eslint-enable no-unused-vars */
 
 const { Search } = Input
@@ -22,6 +23,8 @@ class IndexList extends React.Component {
             antdTitle: [],
             // antd-内容
             antdData: [],
+            filteresCloumn: null,
+            filteredInfo: null,
             searchText: '',
             searchedColumn: '',
 
@@ -30,6 +33,13 @@ class IndexList extends React.Component {
 
     // 初始化标题
     componentWillMount() {
+        let { sortedInfo, filteredInfo } = this.state;
+        console.log('filteredInfo',filteredInfo)
+        sortedInfo = sortedInfo || {};
+        filteredInfo = filteredInfo || {};
+
+
+
         // antd-title: 初始化thead
         let antdTitleInit = [
             {
@@ -64,6 +74,11 @@ class IndexList extends React.Component {
                 align: 'center',
                 canSearch: true,
                 canDropdown: true,
+                // 过滤筛选
+                // filters: this.filterCloumn('province'),
+                filters: this.getCloumnUni('province'),
+                // filteredValue: this.state.filteredInfo.province || null,
+                onFilter: (value, record) => record.province.includes(value),
                 // ...this.getColumnSearchProps('province')
             },
             {
@@ -94,8 +109,7 @@ class IndexList extends React.Component {
                 width: 150,
                 align: 'center',
                 render: (record) => (
-                    <Button type="primary" onClick={this.delete.bind(this, record.tel)}>删除</Button>
-                    // <Button type = "primary" onClick={this.delete(record.tel)}>删除</Button>
+                    <Button type = "primary" onClick={this.delete(record.tel)}>删除</Button>
                 )
             },
         ]
@@ -142,7 +156,9 @@ class IndexList extends React.Component {
     }
 
     // 1. 删除功能
-    delete(tel) {
+    // 注意这里不能是 delete = (tel) => {  否则就直接运行了，应该返回一个函数，通过onClick时才调用
+     delete = (tel) => () => {
+        // console.log(tel);
         let res = this.state.antdData.filter((item) => (
             item.tel !== tel
         ));
@@ -151,20 +167,9 @@ class IndexList extends React.Component {
         })
     }
 
-    // 会报错：Cannot update during an existing state transition (such as within `render`). Render methods should be a pure function of props and state.
-    // delete = (tel) => {
-    //     // console.log(tel);
-    //     let res = this.state.antdData.filter((item) => (
-    //         item.tel !== tel
-    //     ));
-    //     this.setState({
-    //         antdData: res
-    //     })
-    // }
-
     // 2. 列宽可调控
     ResizableTitle = (props) => {
-        console.log('props', props);
+        // console.log('props', props);
         const { onResize, width, ...restProps } = props;
 
         return (
@@ -186,7 +191,6 @@ class IndexList extends React.Component {
             </Resizable>
         );
     }
-
     handleResize = index => (e, { size }) => {
         // console.log('e+size', e, size)
         this.setState(({ antdTitle }) => {
@@ -199,7 +203,6 @@ class IndexList extends React.Component {
             return { antdTitle: nextColumns };
         });
     };
-
     // 控制列宽调控的对象
     components = {
         // 头部
@@ -210,7 +213,86 @@ class IndexList extends React.Component {
     };
 
 
-    // 3.搜索
+    // 3.筛选功能(未100%解决)
+    getCloumnUni = (cloumnTitle) => {
+        let res1 =  [
+            { text: '北京', value: '北京' },
+            { text: '上海', value: '上海' },
+            { text: '广东', value: '广东' },
+        ]
+        console.log(res1)
+        return res1
+
+        this.filterCloumn(cloumnTitle).then((value) => {
+            console.log('fulfilled!', value);
+            this.setState({
+                filteresCloumn: value,
+            })
+        })
+        console.log('filteresCloumn', this.state.filteresCloumn)
+        return this.state.filteresCloumn;
+    }
+    
+
+    filterCloumn = (cloumnTitle) => {
+        
+        // 这里有问题，为什么异步后就获取不了数据了？？？！！！
+        // setTimeout 异步获取数据, 如果不异步, antdData的值为空
+        // setTimeout(() => {
+            // // console.log('cloumnTitle + data', cloumnTitle, this.state.antdData);
+            // // 拿到整列数据，类型是数组
+            // let cloumns = this.state.antdData.map((item) => (item.province));
+            // // 把数组进行去重(数组 => set => 数组)
+            // let cloumnUni = [... new Set(cloumns)];
+            // // console.log('cloumns + cloumnUni', cloumns, cloumnUni);
+            // let res = [];
+            // cloumnUni.forEach((x) => (res.push({text: x, value: x})))
+            // console.log(res)
+            // return res;
+        // })
+
+        return new Promise((resolve, reject) => {
+            if(cloumnTitle !== null){
+                console.log('cloumnTitle + data', cloumnTitle, this.state.antdData);
+                // 拿到整列数据，类型是数组
+                let cloumns = this.state.antdData.map((item) => (item.province));
+                // 把数组进行去重(数组 => set => 数组)
+                let cloumnUni = [... new Set(cloumns)];
+                console.log('cloumns + cloumnUni', cloumns, cloumnUni);
+                let res = [];
+                cloumnUni.forEach((x) => (res.push({text: x, value: x})))
+                console.log(res)
+                let res1 =  [
+                    { text: '北京', value: '北京' },
+                    { text: '上海', value: '上海' },
+                    { text: '广东', value: '广东' },
+                ]
+                console.log(res1)
+                resolve(res1)
+            }})
+    }
+
+    handleChange = (pagination, filters, sorter) => {
+        console.log('Various parameters', pagination, filters, sorter);
+        this.setState({
+          filteredInfo: filters,
+          sortedInfo: sorter,
+        });
+    };
+
+    clearFilters = () => {
+        this.setState({ filteredInfo: null });
+    };
+
+    clearAll = () => {
+        this.setState({
+          filteredInfo: null,
+          sortedInfo: null,
+        });
+      };
+    
+    
+    // 4.搜索
     search(val) {
         // 初始化：所有都显示
         this.state.numberDetail.map((item) => {
@@ -239,7 +321,6 @@ class IndexList extends React.Component {
             numberDetail: this.state.numberDetail
         })
     }
-
     // antd 搜索
     getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -292,7 +373,6 @@ class IndexList extends React.Component {
                     text
                 )
     })
-
     handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         this.setState({
@@ -300,12 +380,10 @@ class IndexList extends React.Component {
             searchedColumn: dataIndex,
         });
     }
-
     handleReset = clearFilters => {
         clearFilters();
         this.setState({ searchText: '' });
     }
-
     // 搜索输入框
     onBlur = () => {
         const { value, onBlur, onChange } = this.props;
@@ -318,7 +396,6 @@ class IndexList extends React.Component {
             onBlur();
         }
     };
-
     onChange = e => {
         const { value } = e.target;
         const reg = /^-?\d*(\.\d*)?$/;
@@ -329,8 +406,7 @@ class IndexList extends React.Component {
 
 
     render() {
-
-
+        
         return (
             <div className="number-list">
                 {/* 标题区域 */}
@@ -366,7 +442,6 @@ class IndexList extends React.Component {
                         </div>
                     </div>
                 </div>
-
 
                 {/* 数据区域 */}
                 <div className="detailTable">
