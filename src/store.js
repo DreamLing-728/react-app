@@ -1,113 +1,58 @@
 /* eslint-disable no-unused-vars */
 import { createStore } from 'redux';
+import axios from 'axios';
+import mock from './mock/mock'
 /* eslint-enable no-unused-vars */
 
-// 假装获取到了数据
-let initData = [
-    {
-        "tel": "13031442718",
-        "name": "张三",
-        "province": "北京",
-        "city": "北京",
-        "areacode": "010",
-        "show": true
-    },
-    {
-        "tel": "15036232568",
-        "name": "李四",
-        "province": "上海",
-        "city": "上海",
-        "areacode": "021",
-        "show": true
-    },
-    {
-        "tel": "17807712987",
-        "name": "王五",
-        "province": "广东",
-        "city": "深圳",
-        "areacode": "0755",
-        "show": true
-    },
-    {
-        "tel": "13045842718",
-        "name": "张三",
-        "province": "北京",
-        "city": "北京",
-        "areacode": "010",
-        "show": true
-    },
-    {
-        "tel": "15035223568",
-        "name": "李四",
-        "province": "上海",
-        "city": "上海",
-        "areacode": "021",
-        "show": true
-    },
-    {
-        "tel": "17802910987",
-        "name": "王五",
-        "province": "广东",
-        "city": "深圳",
-        "areacode": "0755",
-        "show": true
-    },
-    {
-        "tel": "12034842718",
-        "name": "张三",
-        "province": "北京",
-        "city": "北京",
-        "areacode": "010",
-        "show": true
-    },
-    {
-        "tel": "15444732568",
-        "name": "李四",
-        "province": "上海",
-        "city": "上海",
-        "areacode": "021",
-        "show": true
-    },
-    {
-        "tel": "17809988987",
-        "name": "王五",
-        "province": "广东",
-        "city": "深圳",
-        "areacode": "0755",
-        "show": true
-    },
-    {
-        "tel": "13042342718",
-        "name": "张三",
-        "province": "北京",
-        "city": "北京",
-        "areacode": "010",
-        "show": true
-    },
-    {
-        "tel": "15978423568",
-        "name": "李四",
-        "province": "上海",
-        "city": "上海",
-        "areacode": "021",
-        "show": true
-    },
-    {
-        "tel": "17807913787",
-        "name": "王五",
-        "province": "广东",
-        "city": "深圳",
-        "areacode": "0755",
-        "show": true
-    }
-]
+
+// mock获取数据
+// async function getNumberList(){
+//     try{
+//         let res = await axios.get('http://localhost:5555/getNumberList');
+        
+//         let initData = res.data;
+//         console.log('initData',initData);
+
+//         // 创建reducer
+//         function reducer(state = initData) {
+//             return state;
+//         }
+
+//         // 创建store
+//         let store = createStore(reducer);  
+//         return store;
+
+//     }catch(e){
+//         console.log('网络错误');
+//     }
+// }
+
+// 方法1： export default 放里面： 不行，会报错
+// getNumberList().then((store) => {
+//     console.log('store', store);
+//     export default store; //???
+// })
+
+// 方法2：返回getNumberList()： 不行，因为返回的是一个promise对象, 但是我想要的只是里面的object！！！
+// console.log('getNumberList', getNumberList())
+// export default getNumberList();
+
+
+
+
+// // 固定测试数据：能调通
+let initData = [{tel: "10676812184", name: "戴霞", province: "福建省", city: "澳门半岛", areacode: "033", show: true}];
 
 // 创建reducer
 function reducer(state = initData) {
     return state;
 }
-
 // 创建store
-let store = createStore(reducer);
-
+let store = createStore(reducer);  
+console.log(store)
 export default store;
+
+
+
+
+
